@@ -1,0 +1,35 @@
+<!-- dashboard.html -->
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock title%}
+
+{% block content %}
+    <nav>
+        <ul class="nav">
+            <li class="nav-item"><a class="nav-link" href="{% url 'list' %}">Home</a></li>
+        </ul>
+    </nav>
+    <section id="profile">
+        <h2>Profile Information</h2>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p>Username: {{ user.username }}</p> <!-- Display user's username dynamically -->
+                    <p>Email: {{ user.email }}</p> <!-- Display user's email dynamically -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="orders">
+        <h2>Orders</h2>
+        {% if orders %}
+            <ul>
+                {% for order in orders %}
+                    <li>{{ order.description }}</li> <!-- Assuming order has a 'description' field -->
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No orders</p>
+        {% endif %}
+    </section>
+{% endblock content %}

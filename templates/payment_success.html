@@ -1,0 +1,18 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Payment Successful{% endblock title%}
+
+{% block content %}
+<div>
+<h3>Thank you for Ordering</h3>
+<h3>We are currently verifying your payment,</h3>
+<h3>your order will be automatically updated. :)</h3>
+<h1>Thank you</h1>
+
+    <br><br><br><br><br><br>
+<a href="{% url 'list' %}" class="btn btn-primary">Get back to Exploring</a>
+</div>
+
+<br><br><br>
+{% endblock content %}

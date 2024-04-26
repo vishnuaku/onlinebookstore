@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <meta id="meta" name="viewport"
+       content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+       integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+
+    <style type="text/css">
+       body {
+          background-color: #f0f0f0;
+
+       }
+    </style>
+</head>
+
+
+<body>
+    <div class="container">
+       {% if object.book_available is True %}
+       <div class="row">
+          <div class="col-lg">
+             <br><div class="text-center" style="width: 22rem;">
+                <img src="{{ object.image_url }}" class="card-img">
+               </div>
+          </div>
+          <div class="col-lg">
+             <br>
+             <div class="card card-body">
+                <h3>{{object.title}}</h3>
+                <hr>
+                <h4>Total: ₹{{object.price|floatformat:2}}</h4>
+                <hr>
+
+                <div class="payment-form" >
+                  <img src="{% static 'images/image.jpg' %}" alt="Alternative Payment Method" style="width: 400px;">
+                  <form action="{% url 'Payment' %}" method="POST">
+                    <div class="form-group">
+                        {% csrf_token %}
+                        {{form}}
+                      <label for="paymentDetails">Enter Transaction ID</label>
+                      <input type="text" class="form-control" id="paymentDetails" name="paymentDetails" required>
+                    </div>
+                    <button type="submit" value="Submit" class="btn btn-primary">Submit Payment</button>
+                  </form>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+
+    <script>
+       // ... existing Javascript code for completeOrder function, etc. ...
+    </script>
+
+    {% else %}
+    </div>
+    <div class="mx-auto" style="width: 340px;">
+    <h4 class="text-danger">Sorry, this book is out of Stock !</h4>
+    {% endif %}
+</body>
+
+</html>
+
+{% endblock content %}

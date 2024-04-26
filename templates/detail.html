@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<br>
+<div class="card mb-3" style="max-width: 840px;">
+    <div class="row no-gutters">
+      <div class="col-md-4">
+        <img src="{{ object.image_url }}" class="card-img">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h4 class="card-title">{{ object.title }}</h4>
+          <p class="card-text">Author: {{ object.author }}</p><hr>
+          <p class="card-text">{{ object.description }}</p>
+          <!-- Display overall rating -->
+<p class="card-text">Overall Rating: {% if book.total_ratings > 0 %}{{ book.total_rating|floatformat:"2" }} / {{ book.total_ratings }}{% else %}No ratings yet{% endif %}</p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Rating -->
+<form method="post" action="{% url 'update_rating' object.pk %}">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="rating">Rate this book:</label>
+        <select class="form-control" id="rating" name="rating">
+            <option value="1">★</option>
+            <option value="2">★★</option>
+            <option value="3">★★★</option>
+            <option value="4">★★★★</option>
+            <option value="5">★★★★★</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit Rating</button>
+</form>
+
+<!-- Follow Author -->
+<p><a href="{{ object.follow_author }}">Follow Author</a></p>
+
+<!-- Price -->
+<p>Price: ₹ {{ object.price|floatformat:2 }}</p>
+
+<!-- Buy Now Button or Out of Stock -->
+{% if object.book_available is True %}
+    <a href="{% url 'checkout' object.pk %}" class="btn btn-outline-success" role="button">Buy Now</a>
+{% else %}
+    <h4 class="text-danger">Out of Stock !</h4>
+{% endif %}
+
+{% endblock content %}
